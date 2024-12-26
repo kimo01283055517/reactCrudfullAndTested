@@ -1,0 +1,1 @@
+{"version":3,"file":"index.css","mappings":";;;AAAA;EACI;EACA;EACA;AACJ;;AACA;EACI;AAEJ,C","sources":["webpack://y/./src/index.scss"],"sourcesContent":[".nav{\r\n    width: 100vw;\r\n    height: 10vh;\r\n    background: red;\r\n}\r\n.box{\r\n    background-color: green;\r\n}"],"names":[],"sourceRoot":""}
