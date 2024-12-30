@@ -56,7 +56,7 @@ const App = () => {
     fetchData();
   }, []);
 
-  // insert one item useing form in react and update the state item
+  // indsfgsert one item useing form in react and update the state item
   const handleInterst = async updatedItem => {
     console.log(updatedItem);
     try {
@@ -67,9 +67,10 @@ const App = () => {
       });
       setData(prevData => [...prevData, response.data]);
       console.log(response.data);
-      alert('Item inserted successfully!');
+      alert('Item inserted successfuy!');
     } catch (error) {
       console.error('Error updating item:', error);
+      console.log('just test');
     }
   };
 
@@ -90,7 +91,7 @@ const App = () => {
     }
   };
 
-  // Delete an item
+  // Delete an item__________________________________________________________________________________________________
   const handleDelete = async id => {
     try {
       await axios__WEBPACK_IMPORTED_MODULE_2__["default"].delete("".concat(my.root, "wp/v2/posts/").concat(id), {

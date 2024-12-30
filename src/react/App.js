@@ -135,4 +135,12 @@ const App = () => {
                 defaultValue={selectedItem.name}
                 required
               />
-              <butt
+              <button type="submit">Save</button>
+            </form>
+          </div>
+        )}
+      </div>
+    );
+  };
+  
+  export default App;
