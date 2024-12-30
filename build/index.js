@@ -38,6 +38,7 @@ __webpack_require__.r(__webpack_exports__);
 const App = () => {
   const [data, setData] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)([]);
   const [selectedItem, setSelectedItem] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useState)(null);
+  //
   (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     const fetchData = async () => {
       try {
@@ -54,7 +55,8 @@ const App = () => {
     };
     fetchData();
   }, []);
-  // insert an item
+
+  // insert one item useing form in react and update the state item
   const handleInterst = async updatedItem => {
     console.log(updatedItem);
     try {
