@@ -12,7 +12,13 @@ function enqueue_my_react_app() {
         true
     );
     wp_enqueue_style( 'mystyle',get_theme_file_uri('/build/index.css') );
-
+/**  عمل متغير يتم تركة فى الصفحه وذلك ليتم التعامل معه من خلال الجاف سكربيت
+ * عن طريق متغير my.root 
+ * او عن طريق متغير  my.nonce 
+ *  مع لتركير ان الاخير هو رقم يتم استخراجه من الورد برس للتعامل مع  سرية البيانات 
+ * ويتم وضعة فى  header  
+ * عن ارسال اجاكس او اكاسيوس او طريقة من الجافا سكريبت 
+ */
     wp_localize_script('my-react-app', 'my', [
         'root'  => esc_url_raw(rest_url()),
         'nonce' => wp_create_nonce('wp_rest') // إنشاء Nonce
@@ -23,41 +29,48 @@ function enqueue_my_react_app() {
 }
 add_action('wp_enqueue_scripts', 'enqueue_my_react_app');
 
-
- register_activation_hook(__FILE__, 'ctp_create_custom_table');
-register_deactivation_hook(__FILE__, 'ctp_delete_custom_table');
+/**
+ * التالى هو محتويات البلوجن 
+ * اولا يتم التسجيل ان البلوجن عن التفعيل يتم اعداد الجدول 
+ * مع التركيز ان عن عدم التفعيل يتم مسح الجدول ولكن الكود 
+ * الخاص بها لم يكتمل حتى تاريخة
+ */
+//  register_activation_hook(__FILE__, 'ctp_create_custom_table');
+// register_deactivation_hook(__FILE__, 'ctp_delete_custom_table');
    
    
 
-   // Create a custom table on plugin activation
-   function ctp_create_custom_table() {
-    global $wpdb;
-    $table_name = $wpdb->prefix . 'custom_table';
+//    // Create a custom table on plugin activation
+//    function ctp_create_custom_table() {
+//     global $wpdb;
+//     $table_name = $wpdb->prefix . 'custom_table';
 
-    // SQL to create the custom table
-    $charset_collate = $wpdb->get_charset_collate();
-    $sql = "CREATE TABLE $table_name (
-        id BIGINT(20) UNSIGNED AUTO_INCREMENT,
-        name VARCHAR(255) NOT NULL,
-        age INT(3) NOT NULL,
-        hobby VARCHAR(255) NOT NULL,
-        city VARCHAR(255) NOT NULL,
-        phone_number VARCHAR(15) NOT NULL,
-        PRIMARY KEY  (id)
-    ) $charset_collate;";
+//     // SQL to create the custom table
+//     $charset_collate = $wpdb->get_charset_collate();
+//     $sql = "CREATE TABLE $table_name (
+//         id BIGINT(20) UNSIGNED AUTO_INCREMENT,
+//         name VARCHAR(255) NOT NULL,
+//         age INT(3) NOT NULL,
+//         hobby VARCHAR(255) NOT NULL,
+//         city VARCHAR(255) NOT NULL,
+//         phone_number VARCHAR(15) NOT NULL,
+//         PRIMARY KEY  (id)
+//     ) $charset_collate;";
 
-    require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
-    dbDelta($sql);
-}
+//     require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+//     dbDelta($sql);
+// }
 
 
 // Delete the custom table on plugin deactivation
-function ctp_delete_custom_table() {
-    global $wpdb;
-    $table_name = $wpdb->prefix . 'custom_table';
-    $wpdb->query("DROP TABLE IF EXISTS $table_name");
-}
-
+// function ctp_delete_custom_table() {
+//     global $wpdb;
+//     $table_name = $wpdb->prefix . 'custom_table';
+//     $wpdb->query("DROP TABLE IF EXISTS $table_name");
+// }
+//-------------------------------------------------------------
+// للتوجيه للصفحات حسب الرغبة
+//-------------------------------------------------------------
 add_filter( 'template_include','redirest_page_as_i_need' );
 
 function redirest_page_as_i_need($template){
@@ -70,6 +83,9 @@ function redirest_page_as_i_need($template){
 }
 
 //--------------------to select data to plugin ------------------------------
+// للتعامل مع الجدول المعد بمعرفتى عن طريق البلوجن 
+// الوصول للبيانات ثم العرض 
+//----------------------------------------------------------------------------
 
 add_action('rest_api_init', function () {
     register_rest_route('test/v1', '/data', array(
@@ -89,6 +105,8 @@ function custom_get_data($request) {
 }
 
 //--------------------to insert data to plugin ------------------------------
+// اضافة البيانات فى الجدول المعد بمعرفتى 
+// عن طريق البوست واستخراج البيانات تمهيداللتعامل معة طريق الجاف سكريبت
 add_action('rest_api_init', function () {
     register_rest_route('test/v1', '/insert', [
         'methods'  => 'POST', // HTTP method
